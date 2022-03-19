@@ -1,9 +1,8 @@
 ### Hola, Mi nombre es Gabriel 👋
 💡 &nbsp;Me gusta explorar nuevas tecnologias\
 ✍️ &nbsp;En mi tiempo libre me gusta trabajar en proyectos personales.\
-✉️ &nbsp;pudes enviarme un email a l3lackJ4ack@gmail.com.\
+✉️ &nbsp;Pudes enviarme un email a l3lackJ4ack@gmail.com
 
-<img alt="Night Coding" src="https://raw.githubusercontent.com/AVS1508/AVS1508/master/assets/Night-Coding.gif" align="right"/>
 
 ### 🛠 &nbsp;Conocimientos
 
