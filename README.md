@@ -21,7 +21,7 @@
 ![InDesign](https://img.shields.io/badge/-InDesign-05122A?style=flat&logo=adobe-indesign)&nbsp;
 ![Adobe](https://img.shields.io/badge/Adobe%20-%23FF0000.svg?logo=adobe&logoColor=white)&nbsp;
 ![Mysql](https://img.shields.io/badge/MySQL-%2300f.svg?style=flat&llogo=mysql&logoColor=white)&nbsp;
-![PHP](https://img.shields.io/badge/PHP-%23777BB4.svg?logo=php&logoColor=white)&nbsp;
+![PHP](https://img.shields.io/badge/PHP-%23777BB4.svg?logo=php&logoColor=white)
 
 
 
