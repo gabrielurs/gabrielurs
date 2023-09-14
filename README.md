@@ -1,7 +1,7 @@
 ### Hola, Mi nombre es Gabriel 👋
 💡  Me gusta explorar nuevas tecnologías\
 ✍️ En mi tiempo libre me gusta trabajar en proyectos personales.\
-✉️ Puedes enviarme un email a l3lackJ4ack@gmail.com
+✉️ Puedes enviarme un email a gabrielurscoste@gmail.com
 
 
 ### 🛠 &nbsp;Conocimientos
