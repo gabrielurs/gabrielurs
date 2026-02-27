@@ -7,7 +7,7 @@
  \___/_/ \_\___/|_|_\|___|___|____|
 ```
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=00FF00&center=true&vCenter=true&width=600&lines=LOAD_CORE_MODULES...;SYSTEM_READY_v5.1.0;ACCESSING_GABRIEL_MAINFRAME...;INFRASTRUCTURE_RENDERED_Successfully;" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=00FF00&center=true&vCenter=true&width=600&lines=LOAD_CORE_MODULES...;SYSTEM_READY_v5.1.0;ACCESSING_GABRIEL_MAINFRAME...;INFRAESTRUCTURE_RENDERED_Successfully;" alt="Typing SVG" />
 
 ---
 
