@@ -1,35 +1,81 @@
-### Hola, Mi nombre es Gabriel 👋
-💡  Me gusta explorar nuevas tecnologías\
-✍️ En mi tiempo libre me gusta trabajar en proyectos personales.\
-✉️ Puedes enviarme un email a gabrielurscoste@gmail.com
+<div align="center">
 
+```text
+  ___   _   ___  ___  ___ ___ _    
+ / __| /_\ | _ )| _ \|_ _| __| |   
+| (_ |/ _ \| _ \|   / | || _|| |__ 
+ \___/_/ \_\___/|_|_\|___|___|____|
+```
 
-### 🛠 &nbsp;Conocimientos
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=00FF00&center=true&vCenter=true&width=600&lines=LOAD_CORE_MODULES...;SYTEM_READY_v5.1.0;ACCESSING_GABRIEL_MAINFRAME...;INFRASTRUCTURE_RENDERED_Successfully;" alt="Typing SVG" />
 
-![Java](https://img.shields.io/badge/-Java-05122A?style=flat&logo=Java&logoColor=FFA518)&nbsp;
-![Node.js](https://img.shields.io/badge/-Node.js-05122A?style=flat&logo=node.js)&nbsp;
-![Bootstrap](https://img.shields.io/badge/-Bootstrap-05122A?style=flat&logo=bootstrap&logoColor=563D7C)\
-![HTML](https://img.shields.io/badge/-HTML-05122A?style=flat&logo=HTML5)&nbsp;
-![CSS](https://img.shields.io/badge/-CSS-05122A?style=flat&logo=CSS3&logoColor=1572B6)&nbsp;
-![Git](https://img.shields.io/badge/-Git-05122A?style=flat&logo=git)&nbsp;
-![GitHub](https://img.shields.io/badge/-GitHub-05122A?style=flat&logo=github)&nbsp;
-![Markdown](https://img.shields.io/badge/-Markdown-05122A?style=flat&logo=markdown)\
-![Visual Studio Code](https://img.shields.io/badge/-Visual%20Studio%20Code-05122A?style=flat&logo=visual-studio-code&logoColor=007ACC)&nbsp;
-![Illustrator](https://img.shields.io/badge/-Illustrator-05122A?style=flat&logo=adobe-illustrator)&nbsp;
-![Photoshop](https://img.shields.io/badge/-Photoshop-05122A?style=flat&logo=adobe-photoshop)&nbsp;
-![InDesign](https://img.shields.io/badge/-InDesign-05122A?style=flat&logo=adobe-indesign)&nbsp;
-![Adobe](https://img.shields.io/badge/Adobe%20-%23FF0000.svg?logo=adobe&logoColor=white)&nbsp;
-![Mysql](https://img.shields.io/badge/MySQL-%2300f.svg?style=flat&llogo=mysql&logoColor=white)&nbsp;
-![PHP](https://img.shields.io/badge/PHP-%23777BB4.svg?logo=php&logoColor=white)
+---
 
+### 🌐 > NETWORK_NODES (SOCIAL)
 
-
-### ⚙️ &nbsp;GitHub Analytics
-
-<p align="flex">
-<a href="https://github.com/gabrielurs">
-  <img height="180em" src="https://github-readme-stats-eight-theta.vercel.app/api?username=gabrielurs&show_icons=true&theme=algolia&include_all_commits=true&count_private=true"/>
-  <img height="180em" src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=gabrielurs&layout=compact&langs_count=8&theme=algolia"/>
+<a href="mailto:gabrielurscoste@gmail.com">
+  <img src="https://img.shields.io/badge/PORT_25-SMTP_GMAIL-00FF00?style=for-the-badge&logo=gmail&logoColor=000000&labelColor=000000" alt="Email"/>
 </a>
-  <p align="flex"><img src="https://github-readme-streak-stats.herokuapp.com/?user=gabrielurs&theme=algolia" alt="gabrielurs"/></p>
-</p>
+<a href="https://linkedin.com/in/gabrielurs">
+  <img src="https://img.shields.io/badge/PORT_443-HTTPS_LINKEDIN-00FF00?style=for-the-badge&logo=linkedin&logoColor=000000&labelColor=000000" alt="LinkedIn"/>
+</a>
+<a href="https://github.com/gabrielurs">
+  <img src="https://img.shields.io/badge/PORT_22-SSH_GITHUB-00FF00?style=for-the-badge&logo=github&logoColor=000000&labelColor=000000" alt="GitHub"/>
+</a>
+
+---
+
+### 📁 > ls -la --sort=importance /home/projects
+
+```text
+PERMISSIONS  OWNER  GROUP   STAGE   NAME          DESCRIPTION
+-----------  -----  -----   -----   ----          -----------
+drwxr-xr-x   guest  users   [PROD]  vertex        # CRM Multitenant Arch
+drwxr-xr-x   guest  users   [PROD]  bportal       # Corporate Intranet
+drwxr-xr-x   guest  users   [PROD]  rportal       # Energy Consulting App
+drw-------   root   admin   [WIP]   kyros-core    # Core System [InDev]
+drw-------   root   admin   [WIP]   is-tax-mod    # Corporate Tax Module
+```
+
+---
+
+### 📈 > SYSTEM_ACTIVITY_MONITOR
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=gabrielurs&bg_color=000000&color=00ff00&line=00ff00&point=00ff00&area=true&hide_border=true" width="100%" alt="Activity Graph" />
+
+---
+
+### 🧠 > KERNEL_LOGS (PHILOSOPHY)
+
+`[ OK ]` **SCALABILITY_FIRST**: Architectures designed to grow without friction.
+<br>
+`[ OK ]` **CLEAN_CODE**: Readability is the first step to maintainability.
+<br>
+`[ OK ]` **DEVOPS_MINDSET**: Automate everything, monitor everything.
+
+---
+
+### 📦 > LOADED_MODULES (STACK)
+
+| MODULE | TECH / ENGINE | STATUS |
+| :---: | :---: | :---: |
+| **FRONTEND** | `Vue.js / TS / Tailwind` | `[ RUNNING ]` |
+| **BACKEND**  | `Laravel / PHP / API` | `[ RUNNING ]` |
+| **INFRA**    | `Traefik / Portainer` | `[ DEPLOYED ]` |
+| **CI / CD**  | `GitHub Actions` | `[ ENABLED ]` |
+
+---
+
+### 📊 > ANALYTICS_DATA
+
+<img src="https://github-readme-stats-eight-theta.vercel.app/api?username=gabrielurs&show_icons=true&bg_color=000000&text_color=00ff00&icon_color=00ff00&title_color=00ff00&border_color=00ff00&include_all_commits=true&count_private=true" alt="GitHub Stats" />
+<br><br>
+<img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=gabrielurs&layout=compact&langs_count=8&bg_color=000000&text_color=00ff00&title_color=00ff00&border_color=00ff00" alt="Top Languages" />
+
+---
+
+
+<br>
+<b>DISCONNECTING_SESSION... [ OK ]</b>
+
+</div>
