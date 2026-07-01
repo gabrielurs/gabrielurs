@@ -1,0 +1,4 @@
+_archive/
+assets/_*.png
+__pycache__/
+*.pyc
