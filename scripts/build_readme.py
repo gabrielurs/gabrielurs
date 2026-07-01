@@ -40,6 +40,8 @@ def clamp(c): return tuple(max(0,min(255,int(v))) for v in c)
 GRASS=(0x1a,0x40,0x30); GRASS2=(0x15,0x35,0x28); PATHC=(0x43,0x43,0x30); PATH_ST=(0x55,0x52,0x3c)
 TRUNK=(0x2e,0x22,0x18); CAN_D=(0x10,0x34,0x24); CAN_M=(0x1c,0x4e,0x36); CAN_L=(0x30,0x72,0x4a); CAN_HL=(0x4e,0x96,0x64)
 FSHADOW=(0x0b,0x22,0x19); TUFT=(0x24,0x54,0x3a); FIRE=(0x9f,0xf8,0xe6)
+FLOWER=[(0xff,0x6a,0x9a),(0xe6,0xc8,0x54),(0x6f,0xf0,0xda)]; MUSH=(0xc8,0x3a,0x46); MUSH_ST=(0xdc,0xd4,0xbc)
+ROCK=(0x38,0x46,0x40); ROCK_L=(0x4c,0x5c,0x52); LEAF=[(0x3a,0x7a,0x54),(0xcc,0x96,0x50)]; DUST=(0x2c,0x3e,0x34)
 Y0=200; PATH_Y0=Y0+56; PATH_Y1=Y0+76; FEET=Y0+72
 BEHIND_P=80; BEHIND=[(14,Y0+20,9),(46,Y0+38,7),(66,Y0+12,11)]
 FRONT_P=96;  FRONT=[(24,Y0+98,15),(70,Y0+106,12)]
@@ -151,16 +153,32 @@ def frame(t,S):
     def tufts(bx):
         gx=int(bx); d.line([(gx,Y0+12),(gx+1,Y0+9),(gx+2,Y0+12)],fill=TUFT); d.line([(gx+7,Y0+48),(gx+8,Y0+46),(gx+9,Y0+48)],fill=TUFT)
     tiled(18,tufts)
+    def scen_b(bx):                                   # flowers + mushroom above the path
+        gx=int(bx)
+        for (fx,fy,fc) in [(20,Y0+14,FLOWER[0]),(21,Y0+16,FLOWER[1]),(56,Y0+40,FLOWER[2])]: d.point([(gx+fx,fy)],fill=fc)
+        d.rectangle([gx+40,Y0+30,gx+41,Y0+33],fill=MUSH_ST); d.ellipse([gx+38,Y0+27,gx+43,Y0+30],fill=MUSH); d.point([(gx+39,Y0+28)],fill=(0xf0,0xe8,0xd8))
+    tiled(88,scen_b)
     def behind(bx):
         for (ox,oy,r) in sorted(BEHIND,key=lambda e:e[1]): tree_td(d,bx+ox,oy,r)
     tiled(BEHIND_P,behind)
     for (a,b,ph) in [(40,Y0+30,0.0),(214,Y0+22,0.5),(150,Y0+44,0.3),(232,Y0+36,0.8)]:
         yy=b+round(3*math.sin(tau+ph*6.28)); d.point([(a,yy)],fill=FIRE)
+    if int(t*12)%6 in (1,4): d.ellipse([cx-16,FEET-1,cx-11,FEET+2],fill=DUST)   # footfall dust
     d.ellipse([cx-8,FEET-2,cx+8,FEET+3],fill=FSHADOW)
     cf=RUN[int(t*12)%len(RUN)]; scene.paste(cf,(cx-cf.width//2,FEET-cf.height+1),cf)
     def front(bx):
         for (ox,oy,r) in sorted(FRONT,key=lambda e:e[1]): tree_td(d,bx+ox,oy,r)
     tiled(FRONT_P,front)
+    def scen_f(bx):                                  # rock + flowers + bush in the foreground
+        gx=int(bx)
+        d.ellipse([gx+15,Y0+94,gx+21,Y0+97],fill=ROCK); d.line([(gx+16,Y0+94),(gx+19,Y0+94)],fill=ROCK_L)
+        for (fx,fy,fc) in [(50,Y0+104,FLOWER[0]),(51,Y0+106,FLOWER[1])]: d.point([(gx+fx,fy)],fill=fc)
+        tree_td(d,gx+72,Y0+106,6)
+    tiled(100,scen_f)
+    bandh=H-Y0-6                                      # falling leaves (seamless drift)
+    for (lx,ph,ci) in [(24,0.0,0),(96,0.35,1),(150,0.6,0),(210,0.15,1),(244,0.8,0)]:
+        prog=(t+ph)%1.0; yy=Y0+4+int(prog*bandh); xx=lx+int(7*math.sin(prog*9.4+ph*6))
+        d.point([(xx,yy),(xx+1,yy),(xx,yy+1)],fill=LEAF[ci])
     d.rectangle([4,4,W-5,H-5],outline=DIM)
     big=scene.resize((W*S,H*S),Image.NEAREST)
     gl=Image.new("RGB",big.size,(0,0,0)); gd=ImageDraw.Draw(gl)
