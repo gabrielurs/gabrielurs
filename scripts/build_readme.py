@@ -8,10 +8,25 @@ W, H, S = 264, 316, 4
 cx = 132          # card center (title + forest runner)
 HX = 68           # hero + ruins center (left column)
 _SD = os.path.dirname(os.path.abspath(__file__))
-_rg=Image.open(os.path.join(_SD,"..","sprites","run-east.gif")); _rf=[f.convert("RGBA").copy() for f in ImageSequence.Iterator(_rg)]
+
+# ═══════════════════ EDIT THIS TO MAKE IT YOURS ═══════════════════
+NAME     = "GABRIEL URS"
+ARSENAL  = [("FRONT", "Vue · TypeScript · Tailwind"),        # (label, value)  — keep ~3 rows
+            ("BACK",  "Laravel · PHP · REST"),
+            ("INFRA", "Docker · Traefik · CI/CD")]
+DUNGEONS = [("vertex",     "CRM multitenant",        ""),     # (name, desc, tag) — keep ~5 rows
+            ("bportal",    "intranet corporativa",   ""),
+            ("rportal",    "consultoría energética", ""),
+            ("kyros-core", "núcleo del sistema",     "WIP"),
+            ("is-tax-mod", "módulo fiscal",          "WIP")]
+RUN_SPRITE   = "run-east.gif"     # side run cycle (faces right) -> forest runner
+DRINK_SPRITE = "drink-south.gif"  # front idle             -> big portrait
+# ══════════════════════════════════════════════════════════════════
+
+_rg=Image.open(os.path.join(_SD,"..","sprites",RUN_SPRITE)); _rf=[f.convert("RGBA").copy() for f in ImageSequence.Iterator(_rg)]
 _bx=[f.getbbox() for f in _rf]; _ub=(min(b[0] for b in _bx),min(b[1] for b in _bx),max(b[2] for b in _bx),max(b[3] for b in _bx))
 RUN=[f.crop(_ub) for f in _rf]
-_dg=Image.open(os.path.join(_SD,"..","sprites","drink-south.gif")); _df=[f.convert("RGBA").copy() for f in ImageSequence.Iterator(_dg)]
+_dg=Image.open(os.path.join(_SD,"..","sprites",DRINK_SPRITE)); _df=[f.convert("RGBA").copy() for f in ImageSequence.Iterator(_dg)]
 _du=[f.getbbox() for f in _df]; _dub=(min(b[0] for b in _du),min(b[1] for b in _du),max(b[2] for b in _du),max(b[3] for b in _du))
 DRINK=[f.crop(_dub) for f in _df]
 
@@ -97,17 +112,17 @@ def draw_ui(big):
     def center(text,y,size,fill,sp):
         f=F(size); w=sum(dd.textlength(c,font=f)+sp for c in text)-sp; x=(W*S-w)/2
         for ch in text: dd.text((x,y),ch,font=f,fill=fill); x+=dd.textlength(ch,font=f)+sp
-    center("GABRIEL URS",42,42,(0xf2,0xea,0xd2),4)
+    center(NAME,42,42,(0xf2,0xea,0xd2),4)
     ry=112; dd.line([(300,ry),(W*S-300,ry)],fill=(0x2a,0x6c,0x64),width=2)
     for X in (300,W*S//2,W*S-300): dia(X,ry,5,CYAN)
     ax=572
     dia(ax-18,264,7,MAG); dd.text((ax,246),"ARSENAL",font=F(25),fill=CREAM)
     y=302
-    for lab,val in [("FRONT","Vue · TypeScript · Tailwind"),("BACK","Laravel · PHP · REST"),("INFRA","Docker · Traefik · CI/CD")]:
+    for lab,val in ARSENAL:
         dd.text((ax,y),lab,font=F(18),fill=CYAN); dd.text((ax+148,y+1),val,font=F(16,False),fill=CREAM); y+=48
     dia(ax-18,528,7,MAG); dd.text((ax,510),"DUNGEONS",font=F(25),fill=CREAM)
     y=562
-    for name,desc,tag in [("vertex","CRM multitenant",""),("bportal","intranet corporativa",""),("rportal","consultoría energética",""),("kyros-core","núcleo del sistema","WIP"),("is-tax-mod","módulo fiscal","WIP")]:
+    for name,desc,tag in DUNGEONS:
         dd.text((ax,y),name,font=F(17),fill=CYAN); dd.text((ax+150,y+1),desc,font=F(15,False),fill=(0xbe,0xd2,0xc6))
         if tag:
             fw=F(13); dd.text((256*S-14-dd.textlength(tag,font=fw),y+2),tag,font=fw,fill=GOLD)
