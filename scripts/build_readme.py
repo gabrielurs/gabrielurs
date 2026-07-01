@@ -114,7 +114,7 @@ def draw_ui(big):
         y+=36
 
 def frame_glows(t):
-    tau=2*math.pi*t; g=[(HX,120,26,TEALG,0.16),(cx,24,34,(0xd0,0x50,0x64),0.11)]
+    tau=2*math.pi*t; g=[(HX,124,30,TEALG,0.16),(cx,24,34,(0xd0,0x50,0x64),0.11)]
     for (a,b,ph) in [(40,Y0+30,0.0),(214,Y0+22,0.5),(150,Y0+44,0.3),(232,Y0+36,0.8)]:
         g.append((a,b,3,FIRE,0.5+0.3*math.sin(tau*2+ph*6.28)))
     for (X,Y) in [(4,4),(W-5,4),(4,H-5),(W-5,H-5)]: g.append((X,Y,4,(69,230,204),0.55))
@@ -122,7 +122,7 @@ def frame_glows(t):
 
 def frame(t,S):
     scene=BASE.copy(); d=ImageDraw.Draw(scene); tau=2*math.pi*t
-    for (a,b,c) in [(24,140,CYAN),(112,116,MAG_HI),(20,86,CYAN),(116,180,MAG_HI)]:   # sparkles by hero
+    for (a,b,c) in [(18,88,CYAN),(120,92,MAG_HI)]:   # sparkles above the portrait
         d.polygon([(a,b-1),(a+1,b),(a,b+1),(a-1,b)],fill=c)
     # ===== top-down forest (full width; runner faces right, world scrolls left) =====
     def tiled(p,fn):
@@ -154,8 +154,8 @@ def frame(t,S):
         GX,GY,GR=gx*S,gy*S,gr*S; gd.ellipse([GX-GR,GY-GR,GX+GR,GY+GR],fill=tuple(int(min(255,c*gi)) for c in gc))
     big=ImageChops.screen(big,gl.filter(ImageFilter.GaussianBlur(radius=S*2.5)))
     # drinking portrait (left column, chill loop)
-    hf=DRINK[int(t*6)%len(DRINK)]; sp=hf.resize((hf.width*8,hf.height*8),Image.NEAREST)
-    big.paste(sp,(HX*S-sp.width//2, 190*S-sp.height),sp)
+    hf=DRINK[int(t*6)%len(DRINK)]; sp=hf.resize((hf.width*11,hf.height*11),Image.NEAREST)
+    big.paste(sp,(HX*S-sp.width//2, 500-sp.height//2),sp)   # centered with the panels block
     draw_ui(big); return big
 
 frame(0.0,4).save(_ASSETS+"/readme.png"); print("still")
