@@ -73,69 +73,80 @@ def cactus(d,x,y,r):
     d.rectangle([x+2,y-int(h*0.72),x+6,y-int(h*0.62)],fill=col); d.rectangle([x+4,y-int(h*0.72),x+6,y-int(h*0.42)],fill=col)
     d.line([(x,y-h+1),(x,y-h+4)],fill=hi)
 def snowpine(d,x,y,r):
-    x=int(x);y=int(y); sz=int(r*2.4); d.ellipse([x-sz//2,y-1,x+sz//2,y+3],fill=(0x12,0x1c,0x28))
-    d.rectangle([x-1,y-int(sz*0.18),x+2,y],fill=(0x30,0x28,0x22)); top=y-sz
+    x=int(x);y=int(y); sz=int(r*2.4); d.ellipse([x-sz//2,y-1,x+sz//2,y+3],fill=(0x18,0x24,0x30))
+    d.rectangle([x-1,y-int(sz*0.16),x+2,y],fill=(0x2e,0x26,0x20)); top=y-sz
     for k in range(4):
-        f=k/3.0; ty=top+int(sz*0.62*f); by=top+int(sz*(0.62*f+0.42)); w=int(sz*(0.16+0.20*f))
-        d.polygon([(x,ty),(x-w,by),(x+w,by)],fill=(0x1e,0x42,0x38))
-        d.polygon([(x,ty),(x-int(w*0.7),ty+int((by-ty)*0.6)),(x+int(w*0.7),ty+int((by-ty)*0.6))],fill=(0xdc,0xe8,0xf0))
+        f=k/3.0; ty=top+int(sz*0.62*f); by=top+int(sz*(0.62*f+0.44)); w=int(sz*(0.16+0.20*f))
+        d.polygon([(x,ty),(x-w,by),(x+w,by)],fill=(0x26,0x4c,0x42))            # green tier
+        my=ty+int((by-ty)*0.52); mw=max(1,int(w*0.66))
+        d.polygon([(x,ty),(x-mw,my),(x+mw,my)],fill=(0xe6,0xf0,0xf6))          # snow only on the top part
+        d.point([(x-w+1,by-2),(x+w-2,by-2)],fill=(0xcc,0xda,0xe6))
+def barrel(d,x,y):                                                            # small round cactus
+    d.ellipse([x-4,y+1,x+4,y+3],fill=(0x2a,0x1e,0x12)); d.ellipse([x-3,y-5,x+3,y+2],fill=(0x38,0x76,0x46))
+    d.line([(x-1,y-4),(x-1,y+1)],fill=(0x22,0x50,0x32)); d.line([(x+1,y-4),(x+1,y+1)],fill=(0x22,0x50,0x32)); d.point([(x,y-5)],fill=(0xff,0xd0,0x60))
 def band(biome,t):
-    if biome=='forest': g0,g1,pth=(0x1a,0x40,0x30),(0x12,0x2e,0x22),(0x3a,0x3e,0x2c)
-    elif biome=='desert': g0,g1,pth=(0x70,0x56,0x3c),(0x4c,0x39,0x28),(0x5e,0x48,0x32)
-    else: g0,g1,pth=(0x56,0x68,0x7a),(0x3e,0x4e,0x5e),(0x50,0x60,0x70)
-    img=Image.new("RGB",(W,BH)); px=img.load()
+    if biome=='forest': g0,g1,pth,edg=(0x1a,0x40,0x30),(0x12,0x2e,0x22),(0x3a,0x3e,0x2c),TUFT
+    elif biome=='desert': g0,g1,pth,edg=(0x70,0x5a,0x3e),(0x50,0x3e,0x2a),(0x62,0x4c,0x32),(0x6a,0x54,0x3c)
+    else: g0,g1,pth,edg=(0x6c,0x7a,0x88),(0x50,0x5e,0x6e),(0x60,0x6e,0x7c),(0x88,0x96,0xa2)
+    back=Image.new("RGB",(W,BH)); px=back.load()
     for y in range(BH):
         base=lerp(g0,g1,y/BH)
         for x in range(W):
-            dth=int((BAYER[y&3][x&3]/16-0.5)*7); px[x,y]=clamp((base[0]+dth,base[1]+dth,base[2]+dth))
-    d=ImageDraw.Draw(img); d.rectangle([6,LP0,W-6,LP1],fill=pth); tau=2*math.pi*t
+            dth=int((BAYER[y&3][x&3]/16-0.5)*4); px[x,y]=clamp((base[0]+dth,base[1]+dth,base[2]+dth))
+    d=ImageDraw.Draw(back); d.rectangle([6,LP0,W-6,LP1],fill=pth)
+    front=Image.new("RGBA",(W,BH),(0,0,0,0)); fd=ImageDraw.Draw(front); tau=2*math.pi*t
     def tiled(p,fn):
         off=t*p
         for i in range(-1,W//p+2): fn(i*p-off)
-    def plant(x,y,r):
-        if biome=='forest': tree_td(d,x,y,r)
-        elif biome=='desert': cactus(d,x,y,r)
-        else: snowpine(d,x,y,r)
-    def scen(bx,front):
+    def plant(dd,x,y,r):
+        if biome=='forest': tree_td(dd,x,y,r)
+        elif biome=='desert': cactus(dd,x,y,r)
+        else: snowpine(dd,x,y,r)
+    def edges(bx):
+        gx=int(bx); d.line([(gx,LP0),(gx+1,LP0-2),(gx+2,LP0)],fill=edg); d.line([(gx+4,LP1),(gx+5,LP1+2),(gx+6,LP1)],fill=edg)
+    tiled(11,edges)
+    def sb(bx):                                                # back scenery
         gx=int(bx)
         if biome=='forest':
-            if front:
-                d.ellipse([gx+15,94,gx+21,97],fill=ROCK)
-                for (fx,fy,fc) in [(50,104,FLOWER[0]),(51,106,FLOWER[1])]: d.point([(gx+fx,fy)],fill=fc)
-                tree_td(d,gx+72,106,6)
-            else:
-                for (fx,fy,fc) in [(20,14,FLOWER[0]),(56,40,FLOWER[2])]: d.point([(gx+fx,fy)],fill=fc)
-                d.rectangle([gx+40,30,gx+41,33],fill=MUSH_ST); d.ellipse([gx+38,27,gx+43,30],fill=MUSH)
+            for (fx,fy,fc) in [(20,14,FLOWER[0]),(56,40,FLOWER[2])]: d.point([(gx+fx,fy)],fill=fc)
+            d.rectangle([gx+40,30,gx+41,33],fill=MUSH_ST); d.ellipse([gx+38,27,gx+43,30],fill=MUSH)
         elif biome=='desert':
-            if front: d.ellipse([gx+14,96,gx+22,99],fill=(0x4a,0x3a,0x28)); d.ellipse([gx+50,104,gx+56,107],fill=(0x5c,0x4a,0x34))
-            else: d.line([(gx+20,40),(gx+22,34),(gx+24,40)],fill=(0x4e,0x40,0x2c)); d.point([(gx+55,20),(gx+56,20)],fill=(0x86,0x70,0x50))
+            d.line([(gx+20,40),(gx+21,35),(gx+23,40)],fill=(0x4e,0x40,0x2c)); d.line([(gx+22,39),(gx+24,36)],fill=(0x4e,0x40,0x2c)); barrel(d,gx+56,41)
         else:
-            if front: d.ellipse([gx+12,98,gx+26,106],fill=(0x62,0x72,0x82)); d.ellipse([gx+48,104,gx+58,110],fill=(0x6a,0x7a,0x88))
-            else: d.polygon([(gx+20,32),(gx+22,26),(gx+24,32)],fill=(0xbe,0xd0,0xe0)); d.ellipse([gx+52,40,gx+60,44],fill=(0x60,0x70,0x80))
-    def edges(bx):
-        gx=int(bx); c=TUFT if biome=='forest' else ((0x6a,0x54,0x3c) if biome=='desert' else (0x6e,0x80,0x90))
-        d.line([(gx,LP0),(gx+1,LP0-2),(gx+2,LP0)],fill=c); d.line([(gx+4,LP1),(gx+5,LP1+2),(gx+6,LP1)],fill=c)
-    tiled(11,edges); tiled(88,lambda bx: scen(bx,False))
-    tiled(80,lambda bx:[plant(bx+ox,oy,r) for (ox,oy,r) in sorted(BEHIND_L,key=lambda e:e[1])])
-    tiled(96,lambda bx:[plant(bx+ox,oy,r) for (ox,oy,r) in sorted(FRONT_L,key=lambda e:e[1])])
-    tiled(100,lambda bx: scen(bx,True))
+            d.polygon([(gx+20,32),(gx+22,27),(gx+24,32)],fill=(0xc4,0xd4,0xe2)); d.ellipse([gx+50,39,gx+58,43],fill=(0x94,0xa4,0xb2))
+    tiled(88,sb)
+    tiled(80,lambda bx:[plant(d,bx+ox,oy,r) for (ox,oy,r) in sorted(BEHIND_L,key=lambda e:e[1])])
     if biome=='forest':
         for (a,b,ph) in [(40,30,0.0),(214,22,0.5),(150,44,0.3)]:
             yy=b+round(3*math.sin(tau+ph*6.28)); d.point([(a,yy)],fill=FIRE)
         for (lx,ph,ci) in [(24,0.0,0),(150,0.6,1),(210,0.15,0)]:
             pr=(t+ph)%1.0; yy=4+int(pr*(BH-8)); xx=lx+int(7*math.sin(pr*9.4)); d.point([(xx,yy),(xx+1,yy)],fill=LEAF[ci])
     elif biome=='desert':
-        for (sy,ph) in [(20,0.0),(60,0.4),(100,0.7)]:
-            sx=int((t*3+ph)%1.0*W); d.line([(sx,sy),(sx+8,sy)],fill=(0x9a,0x82,0x5c))
+        for (sy,ph) in [(18,0.0),(58,0.4),(98,0.7)]:
+            sx=int((t*3+ph)%1.0*W); d.line([(sx,sy),(sx+7,sy)],fill=(0x9c,0x86,0x60))
     else:
         for (lx,ph) in [(20,0.0),(70,0.3),(130,0.6),(190,0.2),(240,0.8)]:
-            pr=(t+ph)%1.0; yy=int(pr*BH); xx=lx+int(9*math.sin(pr*6.28+ph*6)); d.point([(xx,yy),(xx+1,yy+1)],fill=(0xe6,0xf0,0xf6))
-    return img
+            pr=(t+ph)%1.0; yy=int(pr*BH); xx=lx+int(9*math.sin(pr*6.28+ph*6)); d.point([(xx,yy),(xx+1,yy+1)],fill=(0xf0,0xf6,0xfa))
+    # ---- FRONT layer (drawn OVER the runner for depth) ----
+    tiled(96,lambda bx:[plant(fd,bx+ox,oy,r) for (ox,oy,r) in sorted(FRONT_L,key=lambda e:e[1])])
+    def sf(bx):
+        gx=int(bx)
+        if biome=='forest':
+            fd.ellipse([gx+15,94,gx+21,97],fill=ROCK)
+            for (fx,fy,fc) in [(50,104,FLOWER[0]),(51,106,FLOWER[1])]: fd.point([(gx+fx,fy)],fill=fc)
+            tree_td(fd,gx+72,106,6)
+        elif biome=='desert':
+            fd.ellipse([gx+14,96,gx+22,99],fill=(0x4a,0x3a,0x28)); barrel(fd,gx+52,105)
+        else:
+            fd.ellipse([gx+10,99,gx+28,107],fill=(0xda,0xe4,0xec)); fd.ellipse([gx+13,101,gx+23,106],fill=(0xf2,0xf8,0xfc)); snowpine(fd,gx+58,108,7)
+    tiled(100,sf)
+    return back,front
 BIOMES=['forest','desert','snow']; TW=0.16
 def band_at(t):
     ph=t*3.0; bi=int(ph)%3; fr=ph-int(ph)
     if fr>1-TW:
-        bl=(fr-(1-TW))/TW; return Image.blend(band(BIOMES[bi],t),band(BIOMES[(bi+1)%3],t),bl)
+        bl=(fr-(1-TW))/TW; ba,fa=band(BIOMES[bi],t); bb,fb=band(BIOMES[(bi+1)%3],t)
+        return Image.blend(ba,bb,bl),Image.blend(fa,fb,bl)
     return band(BIOMES[bi],t)
 
 def build_bg():
@@ -209,12 +220,13 @@ def frame(t,S):
     scene=BASE.copy(); d=ImageDraw.Draw(scene); tau=2*math.pi*t
     for (a,b,c) in [(18,88,CYAN),(120,92,MAG_HI)]:   # sparkles above the portrait
         d.polygon([(a,b-1),(a+1,b),(a,b+1),(a-1,b)],fill=c)
-    # ===== biome band: forest -> desert -> snow (crossfade loop) =====
-    scene.paste(band_at(t),(0,Y0))
+    # ===== biome band: back / runner / front (front plants overlap the runner) =====
+    back,front=band_at(t); scene.paste(back,(0,Y0))
     d.line([(16,Y0),(W-16,Y0)],fill=DIM)
     if int(t*12)%6 in (1,4): d.ellipse([cx-16,FEET-1,cx-11,FEET+2],fill=DUST)   # footfall dust
     d.ellipse([cx-8,FEET-2,cx+8,FEET+3],fill=FSHADOW)
     cf=RUN[int(t*12)%len(RUN)]; scene.paste(cf,(cx-cf.width//2,FEET-cf.height+1),cf)
+    scene.paste(front,(0,Y0),front)   # foreground plants over the runner (depth)
     d.rectangle([4,4,W-5,H-5],outline=DIM)
     big=scene.resize((W*S,H*S),Image.NEAREST)
     gl=Image.new("RGB",big.size,(0,0,0)); gd=ImageDraw.Draw(gl)
