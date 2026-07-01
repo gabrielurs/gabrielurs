@@ -2,7 +2,7 @@
 
 Your whole GitHub profile is a **single animated image** (`assets/readme.gif`) drawn by
 code with Python + Pillow: a title, a drinking character portrait, tech/project panels,
-and a top-down world the character runs through — cycling forest → desert → snow. Only the character art comes from image
+and a top-down forest where a character runs. Only the character art comes from image
 files (`sprites/`); everything else is generated.
 
 ![preview](assets/readme.png)
