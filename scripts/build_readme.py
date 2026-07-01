@@ -137,7 +137,7 @@ def frame_glows(t):
     return g
 
 def frame(t,S):
-    scene=BASE.copy(); d=ImageDraw.Draw(scene); tau=2*math.pi*t
+    scene=BASE.copy(); d=ImageDraw.Draw(scene); tau=2*math.pi*t; dyn=[]
     for (a,b,c) in [(18,88,CYAN),(120,92,MAG_HI)]:   # sparkles above the portrait
         d.polygon([(a,b-1),(a+1,b),(a,b+1),(a-1,b)],fill=c)
     # ===== top-down forest (full width; runner faces right, world scrolls left) =====
@@ -161,6 +161,21 @@ def frame(t,S):
     def behind(bx):
         for (ox,oy,r) in sorted(BEHIND,key=lambda e:e[1]): tree_td(d,bx+ox,oy,r)
     tiled(BEHIND_P,behind)
+    def shrine(bx):                                   # glowing monolith landmark (scrolls past)
+        x=int(bx+40); base=Y0+44
+        d.rectangle([x-6,base,x+7,base+3],fill=(0x12,0x2c,0x32))
+        d.polygon([(x-4,base),(x-3,base-30),(x+1,base-34),(x+4,base-30),(x+5,base)],fill=(0x1a,0x38,0x40))
+        d.polygon([(x+1,base-34),(x+4,base-30),(x+2,base-32)],fill=(0x2a,0x50,0x56))
+        d.line([(x,base-6),(x+1,base-18),(x,base-28)],fill=(0x6f,0xf0,0xe0))
+        dyn.append((x,base-16,9,(69,230,204),0.55+0.3*math.sin(tau*1.5)))
+    tiled(176,shrine)
+    def campfire(bx):                                 # cozy fire (warm accent, flickers)
+        x=int(bx+50); y=Y0+50
+        d.line([(x-5,y),(x+5,y)],fill=(0x3a,0x28,0x1c)); d.line([(x-4,y-1),(x+3,y-1)],fill=(0x24,0x18,0x10))
+        fl=int(2*math.sin(tau*6))
+        d.polygon([(x,y-10-fl),(x-3,y-2),(x+3,y-2)],fill=(0xff,0x7a,0x2a)); d.polygon([(x,y-6-fl),(x-2,y-2),(x+2,y-2)],fill=(0xff,0xd0,0x5a))
+        dyn.append((x,y-5,11,(255,150,60),0.6+0.3*math.sin(tau*6)))
+    tiled(220,campfire)
     for (a,b,ph) in [(40,Y0+30,0.0),(214,Y0+22,0.5),(150,Y0+44,0.3),(232,Y0+36,0.8)]:
         yy=b+round(3*math.sin(tau+ph*6.28)); d.point([(a,yy)],fill=FIRE)
     if int(t*12)%6 in (1,4): d.ellipse([cx-16,FEET-1,cx-11,FEET+2],fill=DUST)   # footfall dust
@@ -169,6 +184,19 @@ def frame(t,S):
     def front(bx):
         for (ox,oy,r) in sorted(FRONT,key=lambda e:e[1]): tree_td(d,bx+ox,oy,r)
     tiled(FRONT_P,front)
+    def pond(bx):                                    # pond with animated shimmer (scrolls past)
+        x=int(bx+30); y=Y0+96
+        d.ellipse([x-14,y-5,x+14,y+5],fill=(0x14,0x30,0x3c)); d.ellipse([x-14,y-5,x+14,y+5],outline=(0x2a,0x58,0x54))
+        sh=int(3*math.sin(tau*2))
+        d.line([(x-6+sh,y-1),(x+2+sh,y-1)],fill=(0x4a,0x9a,0x90)); d.line([(x-3-sh,y+2),(x+5-sh,y+2)],fill=(0x36,0x74,0x70))
+        d.ellipse([x+8,y-3,x+11,y-1],fill=(0x1e,0x50,0x36))
+    tiled(200,pond)
+    def crystals(bx):                                # HLD crystal cluster (glows)
+        x=int(bx+40); y=Y0+94
+        for (dx,h,col) in [(-4,9,(0xe0,0x48,0x8e)),(2,14,(0x5f,0xe6,0xd2)),(6,7,(0xa0,0x6a,0xe0))]:
+            d.polygon([(x+dx,y-h),(x+dx-2,y),(x+dx+2,y)],fill=col)
+        dyn.append((x+2,y-8,8,(120,220,220),0.5+0.3*math.sin(tau*2)))
+    tiled(190,crystals)
     def scen_f(bx):                                  # rock + flowers + bush in the foreground
         gx=int(bx)
         d.ellipse([gx+15,Y0+94,gx+21,Y0+97],fill=ROCK); d.line([(gx+16,Y0+94),(gx+19,Y0+94)],fill=ROCK_L)
@@ -182,7 +210,7 @@ def frame(t,S):
     d.rectangle([4,4,W-5,H-5],outline=DIM)
     big=scene.resize((W*S,H*S),Image.NEAREST)
     gl=Image.new("RGB",big.size,(0,0,0)); gd=ImageDraw.Draw(gl)
-    for (gx,gy,gr,gc,gi) in frame_glows(t):
+    for (gx,gy,gr,gc,gi) in frame_glows(t)+dyn:
         GX,GY,GR=gx*S,gy*S,gr*S; gd.ellipse([GX-GR,GY-GR,GX+GR,GY+GR],fill=tuple(int(min(255,c*gi)) for c in gc))
     big=ImageChops.screen(big,gl.filter(ImageFilter.GaussianBlur(radius=S*2.5)))
     # drinking portrait (left column, chill loop)
