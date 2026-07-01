@@ -75,7 +75,7 @@ def hud_panel(d,x0,y0,x1,y1,cut=6):
     for (a,b) in [(x0+cut,y0),(x1-cut,y0),(x1-cut,y1),(x0+cut,y1)]: d.point([(a,b)],fill=CYAN)
 
 def build_base():
-    img=build_bg(); img.paste(RUINS,(0,0),RUINS); d=ImageDraw.Draw(img)
+    img=build_bg(); d=ImageDraw.Draw(img)   # clean portrait backdrop (no ruins clutter)
     def dia(x,y,r,c): d.polygon([(x,y-r),(x+r,y),(x,y+r),(x-r,y)],fill=c)
     d.rectangle([4,4,W-5,H-5],outline=DIM)
     for (X,Y) in [(4,4),(W-5,4),(4,H-5),(W-5,H-5)]: dia(X,Y,2,CYAN)
@@ -97,21 +97,21 @@ def draw_ui(big):
     def center(text,y,size,fill,sp):
         f=F(size); w=sum(dd.textlength(c,font=f)+sp for c in text)-sp; x=(W*S-w)/2
         for ch in text: dd.text((x,y),ch,font=f,fill=fill); x+=dd.textlength(ch,font=f)+sp
-    center("GABRIEL URS",40,42,(0xf2,0xea,0xd2),4)
-    ry=170; dd.line([(300,ry),(W*S-300,ry)],fill=(0x2a,0x6c,0x64),width=2)
+    center("GABRIEL URS",42,42,(0xf2,0xea,0xd2),4)
+    ry=112; dd.line([(300,ry),(W*S-300,ry)],fill=(0x2a,0x6c,0x64),width=2)
     for X in (300,W*S//2,W*S-300): dia(X,ry,5,CYAN)
     ax=572
-    dia(ax-18,250,7,MAG); dd.text((ax,232),"ARSENAL",font=F(25),fill=CREAM)
-    y=282
+    dia(ax-18,264,7,MAG); dd.text((ax,246),"ARSENAL",font=F(25),fill=CREAM)
+    y=302
     for lab,val in [("FRONT","Vue · TypeScript · Tailwind"),("BACK","Laravel · PHP · REST"),("INFRA","Docker · Traefik · CI/CD")]:
-        dd.text((ax,y),lab,font=F(18),fill=CYAN); dd.text((ax+148,y+1),val,font=F(16,False),fill=CREAM); y+=38
-    dia(ax-18,516,7,MAG); dd.text((ax,498),"DUNGEONS",font=F(25),fill=CREAM)
-    y=548
+        dd.text((ax,y),lab,font=F(18),fill=CYAN); dd.text((ax+148,y+1),val,font=F(16,False),fill=CREAM); y+=48
+    dia(ax-18,528,7,MAG); dd.text((ax,510),"DUNGEONS",font=F(25),fill=CREAM)
+    y=562
     for name,desc,tag in [("vertex","CRM multitenant",""),("bportal","intranet corporativa",""),("rportal","consultoría energética",""),("kyros-core","núcleo del sistema","WIP"),("is-tax-mod","módulo fiscal","WIP")]:
         dd.text((ax,y),name,font=F(17),fill=CYAN); dd.text((ax+150,y+1),desc,font=F(15,False),fill=(0xbe,0xd2,0xc6))
         if tag:
             fw=F(13); dd.text((256*S-14-dd.textlength(tag,font=fw),y+2),tag,font=fw,fill=GOLD)
-        y+=36
+        y+=43
 
 def frame_glows(t):
     tau=2*math.pi*t; g=[(HX,124,30,TEALG,0.16),(cx,24,34,(0xd0,0x50,0x64),0.11)]
