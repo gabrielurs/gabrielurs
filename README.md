@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/readme.gif" width="430" alt="Gabriel Urs"/>
+<img src="assets/readme.gif" width="100%" alt="Gabriel Urs"/>
 
 <br><br>
 
