@@ -115,17 +115,16 @@ def draw_ui(big):
     center(NAME,42,42,(0xf2,0xea,0xd2),4)
     ry=112; dd.line([(300,ry),(W*S-300,ry)],fill=(0x2a,0x6c,0x64),width=2)
     for X in (300,W*S//2,W*S-300): dia(X,ry,5,CYAN)
-    ax=572
+    ax=600   # content shifted right so the block is centered in the panels
     dia(ax-18,264,7,MAG); dd.text((ax,246),"ARSENAL",font=F(25),fill=CREAM)
     y=302
     for lab,val in ARSENAL:
-        dd.text((ax,y),lab,font=F(18),fill=CYAN); dd.text((ax+148,y+1),val,font=F(16,False),fill=CREAM); y+=48
+        dd.text((ax,y),lab,font=F(18),fill=CYAN); dd.text((ax+150,y+1),val,font=F(16,False),fill=CREAM); y+=48
     dia(ax-18,528,7,MAG); dd.text((ax,510),"DUNGEONS",font=F(25),fill=CREAM)
     y=562
     for name,desc,tag in DUNGEONS:
         dd.text((ax,y),name,font=F(17),fill=CYAN); dd.text((ax+150,y+1),desc,font=F(15,False),fill=(0xbe,0xd2,0xc6))
-        if tag:
-            fw=F(13); dd.text((256*S-14-dd.textlength(tag,font=fw),y+2),tag,font=fw,fill=GOLD)
+        if tag: dd.text((ax+340,y+2),tag,font=F(13),fill=GOLD)
         y+=43
 
 def frame_glows(t):
